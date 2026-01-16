@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  @apply bg-background min-h-screen transition-colors duration-300;
+}
+
+body.light {
+  background-image: 
+    radial-gradient(at 80% 0%, rgba(124, 150, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(138, 122, 255, 0.15) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+body.dark {
+  background-image: 
+    radial-gradient(at 80% 0%, rgba(124, 150, 255, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(138, 122, 255, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+.glass-card {
+  @apply backdrop-blur-md border border-content2/30;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.glass-card.light {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-card.dark {
+  background: rgba(30, 30, 45, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.product-card {
+  @apply transition-all duration-300;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  @apply shadow-lg;
+}
+
+.ar-badge {
+  @apply absolute top-2 right-2 bg-primary/90 text-white px-2 py-1 rounded text-xs font-medium;
+}
+
+/* Category tiles */
+.category-tile {
+  @apply transition-all duration-200;
+}
+
+.category-tile:hover {
+  @apply shadow-md;
+}
+
+.category-tile-selected {
+  @apply transition-all duration-200;
+  transform: translateY(-2px);
+}
+
+/* VR Mode Styles */
+body.vr-mode {
+  @apply overflow-hidden;
+  perspective: 1000px;
+}
+
+body.vr-mode .container {
+  transform-style: preserve-3d;
+  animation: vr-float 10s ease-in-out infinite;
+}
+
+body.vr-mode .glass-card {
+  transform-style: preserve-3d;
+  transform: translateZ(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+body.vr-mode .product-card {
+  transform-style: preserve-3d;
+  transform: translateZ(20px);
+}
+
+body.vr-mode .product-card:hover {
+  transform: translateZ(30px) scale(1.05);
+}
+
+.vr-cursor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  display: none;
+}
+
+body.vr-mode .vr-cursor {
+  display: block;
+}
+
+.vr-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.vr-mode .vr-grid {
+  opacity: 0.3;
+}
+
+@keyframes vr-float {
+  0%, 100% {
+    transform: translateZ(0px) rotateX(2deg);
+  }
+  50% {
+    transform: translateZ(10px) rotateX(-2deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  h1 {
+    @apply text-3xl;
+  }
+  
+  h2 {
+    @apply text-xl;
+  }
+  
+  .container {
+    @apply px-2;
+  }
+  
+  /* Improved mobile spacing */
+  .product-card {
+    @apply mb-4;
+  }
+  
+  /* Better touch targets for mobile */
+  button, a, .interactive-element {
+    @apply min-h-10 min-w-10;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    @apply px-4;
+  }
+  
+  /* Adjusted grid for tablets */
+  .tablet-grid {
+    @apply grid-cols-2;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1536px) {
+  .container {
+    @apply px-6 max-w-7xl;
+  }
+  
+  /* More breathing room on large screens */
+  .content-spacing {
+    @apply py-8;
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode specific styles */
+.dark .glass-card {
+  @apply bg-content1/70 border-content3/30;
+}
+
+.dark .product-card:hover {
+  box-shadow: 0 10px 25px rgba(124, 150, 255, 0.15);
+}
+
+/* Focus on products */
+.product-highlight {
+  @apply relative overflow-hidden;
+}
+
+.product-highlight::after {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 transition-opacity duration-300;
+}
+
+.product-highlight:hover::after {
+  @apply opacity-100;
+}
+
+/* Improved button styles */
+.action-button {
+  @apply relative overflow-hidden;
+}
+
+.action-button::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 transition-opacity duration-300;
+  z-index: -1;
+}
+
+.action-button:hover::before {
+  @apply opacity-20;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  body.vr-mode .container {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .glass-card {
+    border: 2px solid CanvasText;
+  }
+  
+  .product-card {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Print styles */
+@media print {
+  .glass-card {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Frosted glass effect for search modal */
+.search-modal-glass {
+  @apply backdrop-blur-md bg-background/30 dark:bg-content1/20;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.search-item-glass {
+  @apply backdrop-blur-sm bg-content2/40 dark:bg-content2/20;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.search-item-glass:hover {
+  @apply bg-content2/60 dark:bg-content2/30;
+}
